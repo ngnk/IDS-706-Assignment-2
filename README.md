@@ -1,4 +1,4 @@
-# Week 2 Mini‑Assignment — First Data Analysis (Commodities) - Tony
+# Week 2 Mini‑Assignment - First Data Analysis (Commodities) - Tony
 
 A step‑by‑step tutorial README for the notebook **`702_A2.ipynb`**. 
 
