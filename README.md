@@ -39,7 +39,7 @@ The notebook expects a single CSV file (found in the repository) named **`all_co
 
 ---
 
-## 4) Environment setup
+## 3) Environment setup
 
 You can use **conda** or **pip**. Python 3.10+ is recommended.
 
@@ -66,7 +66,7 @@ pip install pandas numpy matplotlib seaborn scikit-learn
 
 ---
 
-## 5) Importing the dataset
+## 4) Importing the dataset
 
 1. Place `all_commodities_data.csv` into the `data/` folder.
 2. In the notebook, change the CSV read line to a **relative path**:
@@ -96,7 +96,7 @@ print("Date range:", df["Date"].min(), "→", df["Date"].max())
 
 ---
 
-## 6) Exploratory data analysis (EDA)
+## 5) Exploratory data analysis (EDA)
 
 You’ll see in the notebook some rudimentary EDA. Feel free to dive deeper into the data.
 
@@ -112,7 +112,7 @@ You’ll see in the notebook some rudimentary EDA. Feel free to dive deeper into
 
 ---
 
-## 7) Visualizations
+## 6) Visualizations
 
 ### A) Clustered High/Low time‑series by commodity
 The notebook creates a grid of subplots—**one small chart per commodity**—plotting **High** and **Low** over time, plus a panel for **overall averages** across commodities. This gives you a quick, side‑by‑side sense of level and volatility.
@@ -121,7 +121,7 @@ A 6th panel for average High/Low for all metals has been included.
 
 ---
 
-## 9) ML
+## 7) ML
 
 ### A) Classification — “Will price go up or down tomorrow?”
 
@@ -179,7 +179,7 @@ print("RMSE:", rmse, "| R²:", r2)
 
 ---
 
-## 10) Running the notebook
+## 8) Running the notebook
 
 1. Open the .ipynb in Jupyter.
 2. Edit the data path to `data/all_commodities_data.csv`.
