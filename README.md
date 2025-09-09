@@ -43,6 +43,7 @@ The notebook expects a single CSV file (found in the repository) named **`all_co
 
 You can use **conda** or **pip**. Python 3.10+ is recommended.
 
+```bash
 # create & activate
 conda create -n ids706-assign2 python=3.11 -y
 conda activate ids706-assign2
@@ -51,6 +52,9 @@ conda activate ids706-assign2
 conda install -y pandas numpy matplotlib seaborn scikit-learn
 # OR
 pip install pandas numpy matplotlib seaborn scikit-learn
+```
+
+# Launch Jupyter (or VS Code, or your preferred IDE) in this environment
 
 > Launch Jupyter (or VS Code, or your preferred IDE) in this environment.
 
