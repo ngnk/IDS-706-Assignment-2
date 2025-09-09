@@ -7,18 +7,7 @@ It walks you through what the project does, the dataset it uses, how to set up y
 
 ## 1) Overview
 
-This notebook takes a daily historical **commodities futures** dataset (e.g., Gold, Silver, Platinum, Palladium, etc.) and shows a complete mini‑pipeline:
-
-1. **Load & inspect** a CSV dataset of multi‑commodity prices.
-2. **Clean & prepare** the data (parse dates, sort by time, filter per commodity).
-3. **Explore** the data with quick summary statistics and visualizations.
-4. **Visualize** price ranges over time (per commodity) and the **average High/Low** across all commodities.
-5. **Engineer features** such as returns, moving averages, and simple lags.
-6. **Model** two simple predictive tasks (meant to be illustrative, not production‑grade):
-   - **Classification:** predict whether price will go **up or down** based on recent movement (e.g., using `LogisticRegression`).
-   - **Regression:** predict a numeric **next‑day price** (e.g., using `GradientBoostingRegressor`).
-7. **Evaluate** with intuitive metrics (accuracy, confusion matrix for classification; RMSE, R² for regression).
-8. **Discuss** limitations and how to iterate further.
+This notebook takes a daily historical **commodities futures** dataset (e.g., Gold, Silver, Platinum, Palladium, etc.) and shows how to ingest, process, visualize, and run basic ML.
 
 ---
 
