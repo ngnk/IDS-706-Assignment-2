@@ -1,10 +1,11 @@
-# Week 2 Mini‑Assignment — First Data Analysis (Commodities)
+# Week 2 Mini‑Assignment — First Data Analysis (Commodities) - Tony
 
-A step‑by‑step tutorial README for the notebook **`702_A2.ipynb`**. It walks you through what the project does, the dataset it uses, how to set up your environment, and how to run and extend the analysis.
+A step‑by‑step tutorial README for the notebook **`702_A2.ipynb`**. 
 
----
+It walks you through what the project does, the dataset it uses, how to set up your environment, and how to run and extend the analysis.
 
-## 1) What this project does
+
+## 1) Overview
 
 This notebook takes a daily historical **commodities futures** dataset (e.g., Gold, Silver, Platinum, Palladium, etc.) and shows a complete mini‑pipeline:
 
@@ -19,24 +20,20 @@ This notebook takes a daily historical **commodities futures** dataset (e.g., Go
 7. **Evaluate** with intuitive metrics (accuracy, confusion matrix for classification; RMSE, R² for regression).
 8. **Discuss** limitations and how to iterate further.
 
-> The focus is on getting end‑to‑end practice with data handling, EDA, feature engineering, and simple ML baselines on time‑ordered financial data.
-
 ---
 
 ## 2) Dataset description
 
-The notebook expects a single CSV file, commonly named **`all_commodities_data.csv`**, with at least the following columns (case may vary; the code demonstrates both lowercase and Title‑Case usage):
+The notebook expects a single CSV file (found in the repository) named **`all_commodities_data.csv`**, with the following columns.
 
 - **`Date`** *(YYYY‑MM‑DD)* — trading day.
 - **`Open`** — opening price.
 - **`High`** — high price of the day.
 - **`Low`** — low price of the day.
 - **`Close`** — closing price.
-- **`Volume`** — trading volume (if available).
-- **`Commodity`** — human‑readable name (e.g., `"Gold"`, `"Silver"`).
-- **`Ticker`** *(optional)* — an instrument code (e.g., `"GC"`).
-
-> If your file uses lowercase (e.g., `date, open, high, low, close, volume, commodity, ticker`) that’s fine—just make sure the column names used in the notebook match your file.
+- **`Volume`** — trading volume.
+- **`Commodity`** — commodity name (e.g., `"Gold"`, `"Silver"`).
+- **`Ticker`** — commodity code (e.g., `"GC"`).
 
 ### Example data dictionary
 
@@ -50,20 +47,6 @@ The notebook expects a single CSV file, commonly named **`all_commodities_data.c
 | Volume     | int/float | Trading volume (may be missing for some contracts).      |
 | Commodity  | string    | Commodity group or name (e.g., Gold, Silver, etc.).      |
 | Ticker     | string    | Contract ticker/symbol (optional).                       |
-
----
-
-## 3) Project structure (suggested)
-
-```
-project-root/
-├─ data/
-│  └─ all_commodities_data.csv         # your dataset (put it here)
-├─ 702_A2.ipynb                         # the notebook
-└─ README.md                            # this file
-```
-
-> The original notebook referenced a user‑specific, absolute path (e.g., `/Users/.../all_commodities_data.csv`). For portability, use a **relative path** like `data/all_commodities_data.csv` instead (instructions below).
 
 ---
 
@@ -122,13 +105,11 @@ print("Commodities:", df["Commodity"].unique())
 print("Date range:", df["Date"].min(), "→", df["Date"].max())
 ```
 
-> If your file uses lowercase column names, either rename them or adjust the code accordingly (e.g., `df.rename(columns=str.title, inplace=True)`).
-
 ---
 
 ## 6) Exploratory data analysis (EDA)
 
-Examples you’ll see in the notebook:
+You’ll see in the notebook some rudimentary EDA. Feel free to dive deeper into the data.
 
 - Summary statistics with `df.describe()`.
 - Count of rows per commodity / ticker:
@@ -147,46 +128,13 @@ Examples you’ll see in the notebook:
 ### A) Clustered High/Low time‑series by commodity
 The notebook creates a grid of subplots—**one small chart per commodity**—plotting **High** and **Low** over time, plus a panel for **overall averages** across commodities. This gives you a quick, side‑by‑side sense of level and volatility.
 
-> Tip: If you add a 6th panel for average High/Low, compute it from a pivot table (by date) and plot in the last axis.
-
-### B) Other quick visuals (optional)
-- Distribution of daily returns (histogram).
-- Boxplots of daily ranges `(High‑Low)` by commodity.
-- Correlations between engineered features.
+A 6th panel for average High/Low for all metals has been included.
 
 ---
 
-## 8) Feature engineering (illustrative)
+## 9) ML
 
-A lightweight, time‑aware set of features you can build per commodity:
-
-```python
-# sort within each commodity
-df = df.sort_values(["Commodity", "Date"]).reset_index(drop=True)
-
-# daily % return from close
-df["ret_1d"] = df.groupby("Commodity")["Close"].pct_change(1)
-
-# simple lags on close
-df["close_lag1"] = df.groupby("Commodity")["Close"].shift(1)
-df["close_lag5"] = df.groupby("Commodity")["Close"].shift(5)
-
-# moving average & position vs MA
-df["ma_7"] = df.groupby("Commodity")["Close"].transform(lambda s: s.rolling(7).mean())
-df["price_vs_ma7"] = (df["Close"] - df["ma_7"]) / df["ma_7"]
-
-# classification target: up(1)/down(0) relative to *tomorrow*
-df["close_tomorrow"] = df.groupby("Commodity")["Close"].shift(-1)
-df["up_next"] = (df["close_tomorrow"] > df["Close"]).astype("int")
-```
-
-> **Important:** We keep all operations **within commodity groups** to prevent look‑ahead leakage and cross‑series mixing.
-
----
-
-## 9) Baseline models (illustrative)
-
-### A) Classification — “Will price go up tomorrow?”
+### A) Classification — “Will price go up or down tomorrow?”
 
 ```python
 from sklearn.model_selection import train_test_split
@@ -215,7 +163,7 @@ print(classification_report(y_test, y_pred))
 print(confusion_matrix(y_test, y_pred))
 ```
 
-### B) Regression — “What is tomorrow’s close?”
+### B) Regression — “What is tomorrow’s price point?”
 
 ```python
 from sklearn.ensemble import GradientBoostingRegressor
@@ -240,13 +188,11 @@ r2   = r2_score(yr_test, yr_pred)
 print("RMSE:", rmse, "| R²:", r2)
 ```
 
-> These are **didactic baselines**. For serious forecasting, consider walk‑forward validation, richer features, and domain‑appropriate models.
-
 ---
 
 ## 10) Running the notebook
 
-1. Open `702_A2.ipynb` in Jupyter.
+1. Open the .ipynb in Jupyter.
 2. Edit the data path to `data/all_commodities_data.csv`.
 3. Run cells **top‑to‑bottom**. If a plot grid overflows your number of commodities, hide unused axes as shown in the code.
 4. Review the outputs (tables, charts, metrics).
